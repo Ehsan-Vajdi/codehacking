@@ -124,16 +124,28 @@ class AdminUsersController extends Controller
     public function update(UsersEditRequest $request, $id)
     {
         // check if user has filled password
-        // trim method is used to avoid white space
+        // trim method is used to avoid white white space
         if (trim($request->password) == '')
+            // no password has been inserted so ignore password
             $input = $request->except('password');
         else{
+            // password has been inserted
             $input = $request->all();
             // hashing password
             $input['password'] = bcrypt($request->password);
         }
 
+        // find the user that is going to be updated
+        $user = User::findOrFail($id);
+
+        // check if new file (photo) has been uploaded
         if ($file = $request->file('photo_id')){
+
+            // remove the old file (photo) from directory
+            unlink(public_path() . '/' . $user->photo->file);
+
+            // find the old file (photo) and remove from photo database
+            Photo::findOrFail($user->photo->id)->delete();
 
             // getting original file extension
             $ext = $file->getClientOriginalExtension();
@@ -142,7 +154,7 @@ class AdminUsersController extends Controller
             $fileName = time().'.'.$ext;
 
             /*
-            resizing image
+            resizing image to squire
             */
             $image_resize = Image::make($file->getRealPath());
             $image_resize->resize(400, 400);
@@ -153,14 +165,15 @@ class AdminUsersController extends Controller
             end of image resize
             */
 
+            // add new photo name to photo database
             $photo = Photo::create(['file' => $fileName]);
 
+            // add file id (photo id) to the post
             $input['photo_id'] = $photo->id;
 
         }
 
-        $user = User::findOrFail($id);
-
+        // if update process is a success/fail then send desired message
         if ($user->update($input))
             return redirect('/admin/users')->with('update_user', 'User Updated Successfully');
         return redirect('/admin/users')->with('not_able_update_user', 'Could not Update the User!');
@@ -175,7 +188,7 @@ class AdminUsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // find the user to delete it
         $user = User::findOrFail($id);
 
         // remove user photo from image.users
@@ -189,7 +202,7 @@ class AdminUsersController extends Controller
         if ($user->photo_id){
 
             unlink(public_path() . '/' . $user->photo->file);
-
+            Photo::findOrFail('photo_id')->delete();
         }
 
         // delete user and redirect to users page, sent a delete status message as well

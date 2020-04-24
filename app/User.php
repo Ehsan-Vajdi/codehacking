@@ -57,6 +57,14 @@ class User extends Authenticatable
 
     }
 
+    public function isNew(){
+
+        if ($this->role_id == null || $this->is_active == 0)
+            return true;
+        return false;
+
+    }
+
     public function posts(){
 
         return $this->hasMany('App\Post');

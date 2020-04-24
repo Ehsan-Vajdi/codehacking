@@ -45,8 +45,10 @@
                         <a href="{{route('home')}}"><i class="fas fa-home"></i>Home</a>
                     </li>
 
+                    <!--  to avoid new user registers we add a check statement  -->
+                    @if(Auth::user()->isNew())
                     <!--  only users with administrator privileges are allowed to view, create and edit users list  -->
-                    @if(Auth::user()->isAdmin())
+                    @elseif(Auth::user()->isAdmin())
 
                         <li class="has-sub">
                             <a class="js-arrow" href="#"><i class="fas fa-users"></i>Users
@@ -106,8 +108,10 @@
                         <a href="{{route('home')}}"><i class="fas fa-home"></i>Home</a>
                     </li>
 
+                    <!--  to avoid new user registers we add a check statement  -->
+                    @if(Auth::user()->isNew())
                     <!--  only users with administrator privileges are allowed to view, create and edit users list  -->
-                    @if(Auth::user()->isAdmin())
+                    @elseif(Auth::user()->isAdmin())
 
                     <li class="has-sub">
                         <a class="js-arrow" href="#"><i class="fas fa-users"></i>Users

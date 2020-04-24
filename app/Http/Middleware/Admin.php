@@ -16,8 +16,9 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-
+        // user should be registered and logged in
         if (Auth::check()){
+            // user that is Administrator and Active, can access to users and update posts sections
             if (Auth::user()->isAdmin()){
                 return $next($request);
             }

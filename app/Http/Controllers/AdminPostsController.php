@@ -20,14 +20,10 @@ class AdminPostsController extends Controller
     public function index()
     {
         //
-        //dd(Post::pluck('photo_id')->all());
-        $photos = Post::pluck('photo_id')->all() + integer(User::pluck('photo_id')->all());
-        dd($photos);
-        //
 
-        $posts = Post::all();
-
-        return view('admin.posts.index', compact('posts'));
+        if ($posts = Post::all())
+            return view('admin.posts.index', compact('posts'));
+        return view('admin.index')->with('no_post', 'There are no posts to view yet!');
     }
 
     /**
@@ -114,34 +110,44 @@ class AdminPostsController extends Controller
      */
     public function update(PostCreateRequest $request, $id)
     {
-        //
-
+        // put $request in a variable to make it easy to work with
         $input = $request->all();
 
+        // find the post that is going to be updated
+        $post = Post::findOrFail($id);
+
+        // check if new file (photo) has been uploaded
         if ($file = $request->file('photo_id')){
+
+            // remove the old file (photo) from directory
+            unlink(public_path() . '/' . $post->photo->file);
+
+            // find the old file (photo) and remove from photo database
+            Photo::findOrFail($post->photo->id)->delete();
 
             // getting original file extension
             $ext = $file->getClientOriginalExtension();
 
-            // creating new file name and assigning extension to it
+            // creating new modified file name and assigning extension to it
             $fileName = time().'.'.$ext;
 
+            // move file (photo) to directory
             $file->move('images/posts', $fileName);
 
+            // add new photo name to photo database
             $photo = Photo::create(['file' => $fileName]);
 
+            // add file id (photo id) to the post
             $input['photo_id'] = $photo->id;
-
         }
 
-        // if you want to change post original owner to the one whoe updated it:
+        // the next line updates the post for the user which is logged in:
         // Auth::user()->posts()->findOrFail($id)->first()->update($input);
 
         // adding user name whom updated the post to end of body
         $input['body'] = $input['body'] . "\n" . '(Updated By: ' . Auth::user()->name . ')';
 
-        $post = Post::findOrFail($id);
-
+        // if update process is a success/fail then send desired message
         if ($post->update($input))
             return redirect('/admin/posts')->with('update_post', 'Post Updated Successfully');
         return redirect('/admin/posts')->with('not_able_update_post', 'Could not Update the Post!');
@@ -162,6 +168,7 @@ class AdminPostsController extends Controller
 
         if ($post->photo_id){
             unlink(public_path() . '/' . $post->photo->file);
+            Photo::findOrFail($post->photo->id);
         }
 
         if ($post->delete())
