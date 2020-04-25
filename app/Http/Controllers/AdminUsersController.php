@@ -22,10 +22,10 @@ class AdminUsersController extends Controller
      */
     public function index()
     {
-        //
-
+        // get all users from the user table
         $users = User::all();
 
+        // pass users to the admin/users/index view
         return view('admin.users.index', compact('users'));
     }
 
@@ -106,9 +106,10 @@ class AdminUsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        // find the user if exists
         $user = User::findOrFail($id);
 
+        // get columns 'name' & 'id' in this order from role table to pass it throw to the edit page to show roles select box
         $roles = Role::pluck('name', 'id')->all();
 
         return view('admin.users.edit', compact('user', 'roles'));
@@ -141,11 +142,14 @@ class AdminUsersController extends Controller
         // check if new file (photo) has been uploaded
         if ($file = $request->file('photo_id')){
 
-            // remove the old file (photo) from directory
-            unlink(public_path() . '/' . $user->photo->file);
+            // if the user already has an image, then enter if statement
+            if ($user->pohot_id != null){
+                // remove the old file (photo) from directory
+                unlink(public_path() . '/' . $user->photo->file);
 
-            // find the old file (photo) and remove from photo database
-            Photo::findOrFail($user->photo->id)->delete();
+                // find the old file (photo) and remove from photo database
+                Photo::findOrFail($user->photo->id)->delete();
+            }
 
             // getting original file extension
             $ext = $file->getClientOriginalExtension();

@@ -15,15 +15,17 @@ class AdminPostsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
     public function index()
     {
-        //
-
-        if ($posts = Post::all())
+        // get all posts from the user table
+        $posts = Post::all();
+        // check if there is any post to view
+        if ($posts->isNotEmpty())
             return view('admin.posts.index', compact('posts'));
-        return view('admin.index')->with('no_post', 'There are no posts to view yet!');
+        // post table is empty, redirect to home with a message
+        return redirect('/admin')->with('no_post', 'There are no posts yet!');
     }
 
     /**
@@ -92,10 +94,10 @@ class AdminPostsController extends Controller
      */
     public function edit($id)
     {
-        //
-
+        // find the post if exists
         $post = Post::findOrFail($id);
 
+        // get columns 'name' & 'id' in this order from category table to pass it throw to the edit page to show categories select box
         $categories = Category::pluck('name', 'id')->all();
 
         return view('admin.posts.edit', compact('post', 'categories'));
@@ -119,11 +121,14 @@ class AdminPostsController extends Controller
         // check if new file (photo) has been uploaded
         if ($file = $request->file('photo_id')){
 
-            // remove the old file (photo) from directory
-            unlink(public_path() . '/' . $post->photo->file);
+            // if the user already has an image, then enter if statement
+            if ($post->photo_id != null){
+                // remove the old file (photo) from directory
+                unlink(public_path() . '/' . $post->photo->file);
 
-            // find the old file (photo) and remove from photo database
-            Photo::findOrFail($post->photo->id)->delete();
+                // find the old file (photo) and remove from photo database
+                Photo::findOrFail($post->photo->id)->delete();
+            }
 
             // getting original file extension
             $ext = $file->getClientOriginalExtension();

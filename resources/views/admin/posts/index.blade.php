@@ -13,7 +13,7 @@
         errors view section
     -->
 
-    <!--  alert for successful user delete  -->
+    <!--  alert for successful post delete  -->
     @if(session('post_deleted'))
         <div class="sufee-alert alert with-close alert-success alert-dismissible fade show m-t-15 m-b-0">
             {{session('post_deleted')}}
@@ -23,7 +23,7 @@
         </div>
     @endif
 
-    <!--  alert for not able to delete user  -->
+    <!--  alert for not able to delete post  -->
     @if(session('post_not_deleted'))
         <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show m-t-15 m-b-0">
             {{session('post_not_deleted')}}
@@ -33,7 +33,7 @@
         </div>
     @endif
 
-    <!--  alert for successful user update  -->
+    <!--  alert for successful post update  -->
     @if(session('update_post'))
         <div class="sufee-alert alert with-close alert-success alert-dismissible fade show m-t-15 m-b-0">
             {{session('update_post')}}
@@ -43,7 +43,7 @@
         </div>
     @endif
 
-    <!--  alert for not able to update user  -->
+    <!--  alert for not able to update post  -->
     @if(session('not_able_update_post'))
         <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show m-t-15 m-b-0">
             {{session('not_able_update_post')}}
@@ -53,7 +53,7 @@
         </div>
     @endif
 
-    <!--  alert for creating user  -->
+    <!--  alert for creating post  -->
     @if(session('post_created'))
         <div class="sufee-alert alert with-close alert-info alert-dismissible fade show m-t-15 m-b-0">
             {{session('post_created')}}
@@ -63,7 +63,7 @@
         </div>
     @endif
 
-    <!--  alert for failing to creat user  -->
+    <!--  alert for failing to creat post  -->
     @if(session('post_not_created'))
         <div class="sufee-alert alert with-close alert-warning alert-dismissible fade show m-t-15 m-b-0">
             {{session('post_not_created')}}
