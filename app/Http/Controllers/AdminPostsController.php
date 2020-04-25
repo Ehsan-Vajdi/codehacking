@@ -167,10 +167,9 @@ class AdminPostsController extends Controller
      */
     public function destroy($id)
     {
-        //
-
+        // find the post to delete if exists
         $post = Post::findOrFail($id);
-
+        // check if there is any image for post, if there is then remove it from directory and photo table
         if ($post->photo_id){
             unlink(public_path() . '/' . $post->photo->file);
             Photo::findOrFail($post->photo->id);

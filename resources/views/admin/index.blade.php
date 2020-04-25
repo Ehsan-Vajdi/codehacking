@@ -5,7 +5,7 @@
     <!--  page header  -->
     <div class="col-md-12">
         <div class="overview-wrap">
-            <h2 class="title-1">Home</h2>
+            <h2 class="title-1">Cool Admin</h2>
         </div>
     </div>
 

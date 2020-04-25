@@ -202,9 +202,8 @@ class AdminUsersController extends Controller
 //                File::delete($image_path);
 //            }
 //        }
-        // or
+        // another way to delete image from directory and photo table
         if ($user->photo_id){
-
             unlink(public_path() . '/' . $user->photo->file);
             Photo::findOrFail('photo_id')->delete();
         }
