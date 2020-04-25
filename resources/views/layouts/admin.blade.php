@@ -69,7 +69,7 @@
                     <!--  /end administrator privileges  -->
 
                     <li class="has-sub">
-                        <a class="js-arrow" href="#"><i class="fas fa-users"></i>Posts
+                        <a class="js-arrow" href="#"><i class="fas fa-th-large"></i>Posts
                             <span class="arrow">
                                 <i class="fas fa-angle-down"></i>
                             </span>
@@ -84,9 +84,20 @@
                         </ul>
                     </li>
 
-                    <li>
-                        <a href="">
-                            <i class="fas fa-chart-bar"></i>Charts</a>
+                    <li class="has-sub">
+                        <a class="js-arrow" href="#"><i class="fas fa-users"></i>Categories
+                            <span class="arrow">
+                                <i class="fas fa-angle-down"></i>
+                            </span>
+                        </a>
+                        <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                            <li>
+                                <a href="{{route('categories.index')}}">All Categories</a>
+                            </li>
+                            <li>
+                                <a href="{{route('categories.create')}}">Create Category</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -132,7 +143,7 @@
                     <!--  /end administrator privileges  -->
 
                     <li class="has-sub has-dropdown">
-                        <a class="js-arrow" href="#"><i class="fas fa-folder"></i>Posts
+                        <a class="js-arrow" href="#"><i class="fas fa-th-large"></i>Posts
                             <span class="arrow">
                                 <i class="fas fa-angle-down"></i>
                             </span>
@@ -146,10 +157,23 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="">
-                            <i class="fas fa-chart-bar"></i>Charts</a>
+
+                    <li class="has-sub has-dropdown">
+                        <a class="js-arrow" href="#"><i class="fas fa-folder"></i>Categories
+                            <span class="arrow">
+                                <i class="fas fa-angle-down"></i>
+                            </span>
+                        </a>
+                        <ul class="list-unstyled navbar__sub-list js-sub-list">
+                            <li>
+                                <a href="{{route('categories.index')}}">All Categories</a>
+                            </li>
+                            <li>
+                                <a href="{{route('categories.create')}}">Create Category</a>
+                            </li>
+                        </ul>
                     </li>
+
                 </ul>
             </nav>
         </div>

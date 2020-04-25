@@ -106,11 +106,7 @@
                                 <td><a href="{{route('users.edit', $user->id)}}">{{$user->name}}</a></td>
                                 <td>{{$user->email}}</td>
                                 <!--  check if user has role  -->
-                                <td>
-                                    @if($user->role){{$user->role->name}}
-                                    @else User has no role
-                                    @endif
-                                </td>
+                                <td>{{$user->role ? $user->role->name : 'User has no role'}}</td>
                                 <!--  check activity status  -->
                                 @if($user->is_active == 1)
                                     <td class="process">Active</td>
@@ -118,8 +114,8 @@
                                     <td class="denied">Not Active</td>
                                 @endif
 
-                                <td>{{$user->created_at->diffForHumans()}}</td>
-                                <td>{{$user->updated_at->diffForHumans()}}</td>
+                                <td>{{$user->created_at ? $user->created_at->diffForHumans() : 'No Date'}}</td>
+                                <td>{{$user->updated_at ? $user->updated_at->diffForHumans() : 'No Date'}}</td>
                             </tr>
                         @endforeach
 

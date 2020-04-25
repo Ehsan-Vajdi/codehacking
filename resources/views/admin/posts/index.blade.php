@@ -83,16 +83,16 @@
             <div class="table-responsive m-b-40">
                 <table class="table table-borderless table-data3">
                     <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Photo</th>
-                        <th>Title</th>
-                        <th>Content</th>
-                        <th>Owner</th>
-                        <th>Category</th>
-                        <th>Created</th>
-                        <th>Updated</th>
-                    </tr>
+                        <tr>
+                            <th>Id</th>
+                            <th>Photo</th>
+                            <th>Title</th>
+                            <th>Content</th>
+                            <th>Owner</th>
+                            <th>Category</th>
+                            <th>Created</th>
+                            <th>Updated</th>
+                        </tr>
                     </thead>
                     <tbody>
 
@@ -101,14 +101,15 @@
 
                         @foreach($posts as $post )
                             <tr>
-                                <td>{{$post->id}}</td><!--  check if user has photo  -->
+                                <td>{{$post->id}}</td>
+                                <!--  check if post has photo  -->
                                 <td><div class="image img-responsive img-120"><img src="{{$post->photo_id ? asset($post->photo->file) : 'http://placehold.it/140x100'}}" alt="post_image"></div></td>
                                 <td><a href="{{route('posts.edit', $post->id)}}">{{$post->title}}</a></td>
                                 <td>{{$post->body}}</td>
                                 <td>{{$post->user_id ? $post->user->name : 'No One'}}</td>
                                 <td>{{$post->category_id ? $post->category->name : 'Uncategorised'}}</td>
-                                <td>{{$post->created_at->diffForHumans()}}</td>
-                                <td>{{$post->updated_at->diffForHumans()}}</td>
+                                <td>{{$post->created_at ? $post->created_at->diffForHumans() : 'No Date'}}</td>
+                                <td>{{$post->updated_at ? $post->updated_at->diffForHumans() : 'No Date'}}</td>
                             </tr>
                         @endforeach
 

@@ -8,6 +8,7 @@ use App\Photo;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -24,7 +25,6 @@ class AdminUsersController extends Controller
     {
         // get all users from the user table
         $users = User::all();
-
         // pass users to the admin/users/index view
         return view('admin.users.index', compact('users'));
     }
