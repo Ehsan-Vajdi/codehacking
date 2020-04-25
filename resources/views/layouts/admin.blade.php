@@ -84,21 +84,10 @@
                         </ul>
                     </li>
 
-                    <li class="has-sub">
-                        <a class="js-arrow" href="#"><i class="fas fa-users"></i>Categories
-                            <span class="arrow">
-                                <i class="fas fa-angle-down"></i>
-                            </span>
-                        </a>
-                        <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                            <li>
-                                <a href="{{route('categories.index')}}">All Categories</a>
-                            </li>
-                            <li>
-                                <a href="{{route('categories.create')}}">Create Category</a>
-                            </li>
-                        </ul>
+                    <li>
+                        <a href="{{route('categories.index')}}"><i class="fas fa-folder"></i>Categories</a>
                     </li>
+
                 </ul>
             </div>
         </nav>
@@ -158,20 +147,8 @@
                         </ul>
                     </li>
 
-                    <li class="has-sub has-dropdown">
-                        <a class="js-arrow" href="#"><i class="fas fa-folder"></i>Categories
-                            <span class="arrow">
-                                <i class="fas fa-angle-down"></i>
-                            </span>
-                        </a>
-                        <ul class="list-unstyled navbar__sub-list js-sub-list">
-                            <li>
-                                <a href="{{route('categories.index')}}">All Categories</a>
-                            </li>
-                            <li>
-                                <a href="{{route('categories.create')}}">Create Category</a>
-                            </li>
-                        </ul>
+                    <li>
+                        <a href="{{route('categories.index')}}"><i class="fas fa-folder"></i>Categories</a>
                     </li>
 
                 </ul>

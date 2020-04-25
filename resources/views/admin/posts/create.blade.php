@@ -40,7 +40,7 @@
 
             <diw class="row">
                 <div class="form-group col-sm-2">
-                    {!! Form::submit('Create User', ['class' => 'btn btn-primary']) !!}
+                    {!! Form::submit('Create Post', ['class' => 'btn btn-primary']) !!}
                 </div>
 
                 <div class="form-group col-sm-2">

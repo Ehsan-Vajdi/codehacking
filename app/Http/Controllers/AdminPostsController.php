@@ -21,11 +21,7 @@ class AdminPostsController extends Controller
     {
         // get all posts from the user table
         $posts = Post::all();
-        // check if there is any post to view
-        if ($posts->isNotEmpty())
-            return view('admin.posts.index', compact('posts'));
-        // post table is empty, redirect to home with a message
-        return redirect('/admin')->with('no_post', 'There are no posts yet!');
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**

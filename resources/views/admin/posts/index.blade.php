@@ -63,7 +63,7 @@
         </div>
     @endif
 
-    <!--  alert for failing to creat post  -->
+    <!--  alert for failing to create post  -->
     @if(session('post_not_created'))
         <div class="sufee-alert alert with-close alert-warning alert-dismissible fade show m-t-15 m-b-0">
             {{session('post_not_created')}}
@@ -73,52 +73,61 @@
         </div>
     @endif
 
+    <!--  alert for empty table 'posts'  -->
+    @if($posts->isEmpty())
+        <div class="sufee-alert alert with-close alert-warning alert-dismissible fade show m-t-15 m-b-0 m-l-30">
+            <p>There are no posts yet!</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    @endif
+
     <!--
-        /errors view section
+        / End errors view section
     -->
 
     <div class="row m-t-30">
         <div class="col-md-12">
             <!-- DATA TABLE-->
-            <div class="table-responsive m-b-40">
-                <table class="table table-borderless table-data3">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Photo</th>
-                            <th>Title</th>
-                            <th>Content</th>
-                            <th>Owner</th>
-                            <th>Category</th>
-                            <th>Created</th>
-                            <th>Updated</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                    <!--  if there is any user in database  -->
-                    @if($posts)
-
-                        @foreach($posts as $post )
+            <!--  check if there are any post to display  -->
+            @if ($posts->isNotEmpty())
+                <div class="table-responsive m-b-40">
+                    <table class="table table-borderless table-data3">
+                        <thead>
                             <tr>
-                                <td>{{$post->id}}</td>
-                                <!--  check if post has photo  -->
-                                <td><div class="image img-responsive img-120"><img src="{{$post->photo_id ? asset($post->photo->file) : 'http://placehold.it/140x100'}}" alt="post_image"></div></td>
-                                <td><a href="{{route('posts.edit', $post->id)}}">{{$post->title}}</a></td>
-                                <td>{{$post->body}}</td>
-                                <td>{{$post->user_id ? $post->user->name : 'No One'}}</td>
-                                <td>{{$post->category_id ? $post->category->name : 'Uncategorised'}}</td>
-                                <td>{{$post->created_at ? $post->created_at->diffForHumans() : 'No Date'}}</td>
-                                <td>{{$post->updated_at ? $post->updated_at->diffForHumans() : 'No Date'}}</td>
+                                <th>Id</th>
+                                <th>Photo</th>
+                                <th>Title</th>
+                                <th>Content</th>
+                                <th>Owner</th>
+                                <th>Category</th>
+                                <th>Created</th>
+                                <th>Updated</th>
                             </tr>
-                        @endforeach
+                        </thead>
+                        <tbody>
 
-                    @endif
+                            @foreach($posts as $post )
+                                <tr>
+                                    <td>{{$post->id}}</td>
+                                    <!--  check if post has photo  -->
+                                    <td><div class="image img-responsive img-120"><img src="{{$post->photo_id ? asset($post->photo->file) : 'http://placehold.it/140x100'}}" alt="post_image"></div></td>
+                                    <td><a href="{{route('posts.edit', $post->id)}}">{{$post->title}}</a></td>
+                                    <td>{{$post->body}}</td>
+                                    <td>{{$post->user_id ? $post->user->name : 'No One'}}</td>
+                                    <td>{{$post->category_id ? $post->category->name : 'Uncategorised'}}</td>
+                                    <td>{{$post->created_at ? $post->created_at->diffForHumans() : 'No Date'}}</td>
+                                    <td>{{$post->updated_at ? $post->updated_at->diffForHumans() : 'No Date'}}</td>
+                                </tr>
+                            @endforeach
 
-                    </tbody>
-                </table>
-            </div>
-            <!-- END DATA TABLE-->
+                        </tbody>
+                    </table>
+                </div>
+            <!--  End if statement  -->
+            @endif
+
         </div>
     </div>
 

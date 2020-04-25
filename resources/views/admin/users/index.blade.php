@@ -63,7 +63,7 @@
         </div>
     @endif
 
-    <!--  alert for failing to creat user  -->
+    <!--  alert for failing to create user  -->
     @if(session('user_not_created'))
         <div class="sufee-alert alert with-close alert-warning alert-dismissible fade show m-t-15 m-b-0">
             {{session('user_not_created')}}
@@ -74,7 +74,7 @@
     @endif
 
     <!--
-        /errors view section
+        / End errors view section
     -->
 
     <div class="row m-t-30">
@@ -96,30 +96,31 @@
                     </thead>
                     <tbody>
 
-                    <!--  if there is any user in database  -->
-                    @if($users)
+                        <!--  if there is any user in database  -->
+                        @if($users)
 
-                        @foreach($users as $user )
-                            <tr>
-                                <td>{{$user->id}}</td><!--  check if user has photo  -->
-                                <td><div class="image img-responsive img-40"><img src="{{$user->photo_id ? asset($user->photo->file) : 'http://placehold.it/400x400'}}" alt="user_image"></div></td>
-                                <td><a href="{{route('users.edit', $user->id)}}">{{$user->name}}</a></td>
-                                <td>{{$user->email}}</td>
-                                <!--  check if user has role  -->
-                                <td>{{$user->role ? $user->role->name : 'User has no role'}}</td>
-                                <!--  check activity status  -->
-                                @if($user->is_active == 1)
-                                    <td class="process">Active</td>
-                                @else
-                                    <td class="denied">Not Active</td>
-                                @endif
+                            @foreach($users as $user )
+                                <tr>
+                                    <td>{{$user->id}}</td>
+                                    <!--  check if user has photo  -->
+                                    <td><div class="image img-responsive img-40"><img src="{{$user->photo_id ? asset($user->photo->file) : 'http://placehold.it/400x400'}}" alt="user_image"></div></td>
+                                    <td><a href="{{route('users.edit', $user->id)}}">{{$user->name}}</a></td>
+                                    <td>{{$user->email}}</td>
+                                    <!--  check if user has role  -->
+                                    <td>{{$user->role ? $user->role->name : 'User has no role'}}</td>
+                                    <!--  check activity status  -->
+                                    @if($user->is_active == 1)
+                                        <td class="process">Active</td>
+                                    @else
+                                        <td class="denied">Not Active</td>
+                                    @endif
 
-                                <td>{{$user->created_at ? $user->created_at->diffForHumans() : 'No Date'}}</td>
-                                <td>{{$user->updated_at ? $user->updated_at->diffForHumans() : 'No Date'}}</td>
-                            </tr>
-                        @endforeach
+                                    <td>{{$user->created_at ? $user->created_at->diffForHumans() : 'No Date'}}</td>
+                                    <td>{{$user->updated_at ? $user->updated_at->diffForHumans() : 'No Date'}}</td>
+                                </tr>
+                            @endforeach
 
-                    @endif
+                        @endif
 
                     </tbody>
                 </table>

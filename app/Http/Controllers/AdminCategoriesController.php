@@ -33,11 +33,14 @@ class AdminCategoriesController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
-        //
+        // check if category created
+        if (Category::create($request->all()))
+            return redirect('/admin/categories');
+        return redirect('/admin/categories')->with('category_not_created', 'Failed to create new category!');
     }
 
     /**
@@ -55,11 +58,13 @@ class AdminCategoriesController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
         //
+        $category = Category::findOrFail($id);
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
