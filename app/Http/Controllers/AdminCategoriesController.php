@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Http\Requests\CategoryCreateRequest;
 use Illuminate\Http\Request;
 
 class AdminCategoriesController extends Controller
@@ -35,11 +36,11 @@ class AdminCategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
+    public function store(CategoryCreateRequest $request)
     {
         // check if category created
         if (Category::create($request->all()))
-            return redirect('/admin/categories');
+            return redirect('/admin/categories')->with('category_created', 'Category created successfully.');
         return redirect('/admin/categories')->with('category_not_created', 'Failed to create new category!');
     }
 
@@ -72,21 +73,27 @@ class AdminCategoriesController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, $id)
+    public function update(CategoryCreateRequest $request, $id)
     {
         //
+        if (Category::findOrFail($id)->update($request->all()))
+            return redirect('/admin/categories')->with('category_updated', 'Category updated successfully.');
+        return redirect('/admin/categories')->with('category_not_updated', 'Could not update category!.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy($id)
     {
         //
+        if (Category::findOrFail($id)->delete())
+            return redirect('/admin/categories')->with('category_deleted', 'Category deleted successfully.');
+        return redirect('/admin/categories')->with('category_not_deleted', 'Could not deleted Category.');
     }
 }
